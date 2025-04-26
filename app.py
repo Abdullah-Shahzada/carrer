@@ -33,7 +33,7 @@ def create_doc_file(career_recommendations, skill_gap_analysis, learning_resourc
     doc.save("career_recommendations.docx")
 
 # Streamlit App Title
-st.title("AI-Personalized learning and opportunuity reccomendation 🚀")
+st.title("AI-Personalized learning 🚀")
 st.markdown("**Developed by: Abdullah Shahzada**")
 
 # Sidebar Navigation
