@@ -8,7 +8,7 @@ client = Groq(api_key="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"
 # Function to create a .doc file
 def create_doc_file(career_recommendations, skill_gap_analysis, learning_resources, job_websites, success_stories, psychological_analysis, developer_name):
     doc = Document()
-    doc.add_heading("AI-Powered Career Pathway Advisor", 0)
+    doc.add_heading("AI-Personalized learning and opportunuity reccomendation", 0)
     doc.add_paragraph(f"Developed by: {developer_name}\n")
 
     doc.add_heading("Career Recommendations", level=1)
@@ -33,7 +33,7 @@ def create_doc_file(career_recommendations, skill_gap_analysis, learning_resourc
     doc.save("career_recommendations.docx")
 
 # Streamlit App Title
-st.title("AI-Powered Career Pathway Advisor 🚀")
+st.title("AI-Personalized learning and opportunuity reccomendation 🚀")
 st.markdown("**Developed by: Abdullah Shahzada**")
 
 # Sidebar Navigation
