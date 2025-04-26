@@ -52,7 +52,6 @@ if section == "User Input":
     interests = st.text_input("Enter your interests (comma-separated):")
     career_goals = st.text_input("Enter your career goals:")
     education = st.text_input("Enter your educational background:")
-    programming_languages = st.text_input("Enter programming languages you know (comma-separated):")
     industries = st.text_input("Enter industries of interest (comma-separated):")
     experience_level = st.selectbox("Select your experience level:", ["Beginner", "Intermediate", "Expert"])
     psychological_factors = st.selectbox("How well do you handle stress and challenges?", ["Very Well", "Moderate", "Not Well"])
@@ -66,7 +65,6 @@ if section == "User Input":
             Interests: {interests}
             Career Goals: {career_goals}
             Educational Background: {education}
-            Programming Languages: {programming_languages}
             Industries of Interest: {industries}
             Experience Level: {experience_level}
             Psychological Factors: {psychological_factors}
