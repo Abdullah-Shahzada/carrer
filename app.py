@@ -38,7 +38,14 @@ st.markdown("**Developed by: Abdullah Shahzada**")
 
 # Sidebar Navigation
 st.sidebar.title("Navigation")
-section = st.sidebar.radio("Go to", ["User Input", "Career Recommendations", "Skill Gap Analysis", "Certifications & Resources", "Psychological Analysis", "Download DOC"])
+section = st.sidebar.radio("Go to", ["User Input", "Career Recommendations", "Skill Gap Analysis", "Certifications & Resources", "Success Stories", "Psychological Analysis", "Download DOC"])
+with st.sidebar.expander("Job Platforms"):
+    st.markdown("[LinkedIn](https://www.linkedin.com/jobs/)")
+    st.markdown("[Indeed](https://www.indeed.com/)")
+    st.markdown("[Glassdoor](https://www.glassdoor.com/Job/index.htm)")
+    st.markdown("[Monster](https://www.monster.com/)")
+    st.markdown("[AngelList (Startups)](https://angel.co/jobs)")
+    st.markdown("[Remote.co (Remote Jobs)](https://remote.co/remote-jobs/)")
 
 # Initialize session states
 for key in ["career_recommendations", "skill_gap_analysis", "learning_resources", "psychological_analysis", "success_stories"]:
@@ -238,6 +245,39 @@ if section == "Certifications & Resources":
             st.markdown(f"**AI:** {a}")
     else:
         st.info("Generate learning resources first.")
+# --- SUCCESS STORIES SECTION ---
+if section == "Success Stories":
+    st.header("Success Stories")
+    if st.session_state["success_stories"]:
+        st.markdown(st.session_state["success_stories"])
+
+        st.subheader("Chat About Success Stories")
+        if "success_chat" not in st.session_state:
+            st.session_state["success_chat"] = []
+
+        success_question = st.text_input("Ask a question about success stories:")
+        if st.button("Send (Success Chat)"):
+            if success_question:
+                with st.spinner("Thinking..."):
+                    response = client.chat.completions.create(
+                        model="llama-3.1-8b-instant",
+                        messages=[
+                            {"role": "assistant", "content": st.session_state["success_stories"]},
+                            {"role": "user", "content": success_question}
+                        ],
+                        temperature=0.7,
+                        max_tokens=1024,
+                    )
+                    answer = response.choices[0].message.content
+                    st.session_state["success_chat"].append((success_question, answer))
+            else:
+                st.error("Please enter a question.")
+
+        for q, a in st.session_state["success_chat"]:
+            st.markdown(f"**You:** {q}")
+            st.markdown(f"**AI:** {a}")
+    else:
+        st.info("Generate success stories first.")
 
 # --- PSYCHOLOGICAL FACTOR ANALYSIS SECTION ---
 if section == "Psychological Analysis":
