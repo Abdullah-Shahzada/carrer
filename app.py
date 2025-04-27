@@ -6,10 +6,11 @@ from docx import Document
 client = Groq(api_key="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")
 
 # Function to create a .doc file
-def create_doc_file(career_recommendations, skill_gap_analysis, learning_resources, job_websites, success_stories, psychological_analysis, developer_name):
+def create_doc_file(user_name, career_recommendations, skill_gap_analysis, learning_resources, job_websites, success_stories, psychological_analysis, developer_name):
     doc = Document()
-    doc.add_heading("AI-Personalized learning and opportunuity reccomendation", 0)
-    doc.add_paragraph(f"Developed by: {developer_name}\n")
+    doc.add_heading(f"Career Recommendation Report for {user_name}", 0)
+    doc.add_paragraph(f"Dear {user_name},\n")
+    doc.add_paragraph("Based on the information you provided, we have analyzed your profile and here are your career recommendations:\n")
 
     doc.add_heading("Career Recommendations", level=1)
     doc.add_paragraph(career_recommendations)
@@ -30,11 +31,16 @@ def create_doc_file(career_recommendations, skill_gap_analysis, learning_resourc
     doc.add_heading("Psychological Factor Analysis", level=1)
     doc.add_paragraph(psychological_analysis)
 
+    # Closing note
+    doc.add_paragraph(f"\n\nThanks {user_name} for trusting our AI Career Advisory System! 🚀")
+    doc.add_paragraph(f"Developed by: {developer_name}")
+
+    # Save the doc
     doc.save("career_recommendations.docx")
 
 # Streamlit App Title
 st.title("AI-Personalized learning 🚀")
-st.markdown("**Developed by: Abdullah Shahzada**")
+st.markdown("**Developed by: Career_Advisor**")
 
 # Sidebar Navigation
 st.sidebar.title("Navigation")
@@ -48,13 +54,16 @@ with st.sidebar.expander("Job Platforms"):
     st.markdown("[Remote.co (Remote Jobs)](https://remote.co/remote-jobs/)")
 
 # Initialize session states
-for key in ["career_recommendations", "skill_gap_analysis", "learning_resources", "psychological_analysis", "success_stories"]:
+for key in ["user_name", "career_recommendations", "skill_gap_analysis", "learning_resources", "psychological_analysis", "success_stories"]:
     if key not in st.session_state:
         st.session_state[key] = ""
 
 # --- USER INPUT SECTION ---
 if section == "User Input":
     st.header("Enter Your Details")
+    user_name = st.text_input("Please enter your full name:")
+    if user_name:
+        st.session_state["user_name"] = user_name
     skills = st.text_input("Enter your skills (comma-separated):")
     interests = st.text_input("Enter your interests (comma-separated):")
     career_goals = st.text_input("Enter your career goals:")
@@ -68,6 +77,7 @@ if section == "User Input":
     if st.button("Generate Reports"):
         if skills and interests and career_goals and education and industries:
             user_input = f"""
+            User Name: {user_name}
             Skills: {skills}
             Interests: {interests}
             Career Goals: {career_goals}
@@ -317,8 +327,9 @@ if section == "Psychological Analysis":
 if section == "Download DOC":
     st.header("Save and Download Recommendations")
     if all([st.session_state["career_recommendations"], st.session_state["skill_gap_analysis"], st.session_state["learning_resources"], st.session_state["psychological_analysis"], st.session_state["success_stories"]]):
-        developer_name = "Abdullah Shahzada"
+        developer_name = "Carreer_Advisor"
         create_doc_file(
+            st.session_state.get("user_name", "User"),
             st.session_state["career_recommendations"],
             st.session_state["skill_gap_analysis"],
             st.session_state["learning_resources"],
@@ -333,7 +344,7 @@ if section == "Download DOC":
             st.download_button(
                 label="Download Career Report DOC",
                 data=file,
-                file_name="career_recommendations.docx",
+                file_name=f"{st.session_state.get('user_name', 'User')}_career_recommendations.docx",
                 mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
             )
     else:
