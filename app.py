@@ -59,7 +59,7 @@ if section == "User Input":
     problem_solving = st.selectbox("How do you approach complex problems?", ["Enjoy solving challenges", "Can solve problems with guidance", "Finds problem-solving stressful"])
 
     if st.button("Generate Reports"):
-        if skills and interests and career_goals and education and programming_languages and industries:
+        if skills and interests and career_goals and education and industries:
             user_input = f"""
             Skills: {skills}
             Interests: {interests}
