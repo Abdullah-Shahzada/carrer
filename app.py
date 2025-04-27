@@ -142,7 +142,7 @@ if section == "User Input":
                     model="llama-3.1-8b-instant",
                     messages=[{
                         "role": "user",
-                        "content": f"Give success stories of people in:\n{user_input}"
+                        "content": f"Provide real-world success stories of famous people who succeeded in the field(s) of {industries}. Mention their names, achievements, roadmap they follow and a short inspiring note for each."
                     }],
                     temperature=0.7,
                     max_tokens=1024,
